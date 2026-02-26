@@ -30,7 +30,9 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return question.expected === answer.trim().toLowerCase();
+    return (
+        question.expected.trim().toLowerCase() === answer.trim().toLowerCase()
+    );
 }
 
 /**
@@ -78,18 +80,9 @@ export function toShortForm(question: Question): string {
  */
 export function toMarkdown(question: Question): string {
     if (question.type === "short_answer_question") {
-        console.log("# " + question.name + "\n" + question.body);
         return "# " + question.name + "\n" + question.body;
     }
 
-    console.log(
-        "# " +
-            question.name +
-            "\n" +
-            question.body +
-            "\n- " +
-            question.options.join("\n- "),
-    );
     return (
         "# " +
         question.name +
@@ -124,7 +117,12 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    return {
+        ...oldQuestion,
+        name: "Copy of " + oldQuestion.name,
+        published: false,
+        id: id,
+    };
 }
 
 /**
@@ -135,7 +133,7 @@ export function duplicateQuestion(id: number, oldQuestion: Question): Question {
  * Check out the subsection about "Nested Fields" for more information.
  */
 export function addOption(question: Question, newOption: string): Question {
-    return question;
+    return { ...question, options: [...question.options, newOption] };
 }
 
 /**
@@ -152,5 +150,11 @@ export function mergeQuestion(
     contentQuestion: Question,
     { points }: { points: number },
 ): Question {
-    return contentQuestion;
+    return {
+        ...contentQuestion,
+        published: false,
+        points: points,
+        id: id,
+        name: name,
+    };
 }
