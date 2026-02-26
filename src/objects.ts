@@ -8,9 +8,18 @@ import { Question, QuestionType } from "./interfaces/question";
 export function makeBlankQuestion(
     id: number,
     name: string,
-    type: QuestionType
+    type: QuestionType,
 ): Question {
-    return {};
+    return {
+        id: id,
+        name: name,
+        type: type,
+        body: "",
+        expected: "",
+        options: [],
+        points: 1,
+        published: false,
+    };
 }
 
 /**
@@ -21,7 +30,7 @@ export function makeBlankQuestion(
  * HINT: Look up the `trim` and `toLowerCase` functions.
  */
 export function isCorrect(question: Question, answer: string): boolean {
-    return false;
+    return question.expected === answer.trim().toLowerCase();
 }
 
 /**
@@ -31,7 +40,12 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    if (question.type === "short_answer_question") {
+        return true;
+    }
+    return question.options.some(
+        (option: string): boolean => option === answer,
+    );
 }
 
 /**
@@ -41,7 +55,8 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    const firstTen: string = question.name.slice(0, 10);
+    return question.id.toString() + ": " + firstTen;
 }
 
 /**
@@ -62,7 +77,27 @@ export function toShortForm(question: Question): string {
  * Check the unit tests for more examples of what this looks like!
  */
 export function toMarkdown(question: Question): string {
-    return "";
+    if (question.type === "short_answer_question") {
+        console.log("# " + question.name + "\n" + question.body);
+        return "# " + question.name + "\n" + question.body;
+    }
+
+    console.log(
+        "# " +
+            question.name +
+            "\n" +
+            question.body +
+            "\n- " +
+            question.options.join("\n- "),
+    );
+    return (
+        "# " +
+        question.name +
+        "\n" +
+        question.body +
+        "\n- " +
+        question.options.join("\n- ")
+    );
 }
 
 /**
@@ -70,7 +105,7 @@ export function toMarkdown(question: Question): string {
  * `newName`.
  */
 export function renameQuestion(question: Question, newName: string): Question {
-    return question;
+    return { ...question, name: newName };
 }
 
 /**
@@ -79,7 +114,7 @@ export function renameQuestion(question: Question, newName: string): Question {
  * published; if it was published, now it should be not published.
  */
 export function publishQuestion(question: Question): Question {
-    return question;
+    return { ...question, published: !question.published };
 }
 
 /**
@@ -115,7 +150,7 @@ export function mergeQuestion(
     id: number,
     name: string,
     contentQuestion: Question,
-    { points }: { points: number }
+    { points }: { points: number },
 ): Question {
     return contentQuestion;
 }
