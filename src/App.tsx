@@ -1,63 +1,30 @@
 import React from "react";
 import "./App.css";
-import { Button } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { ChangeType } from "./components/ChangeType";
+import { RevealAnswer } from "./components/RevealAnswer";
+import { StartAttempt } from "./components/StartAttempt";
+import { TwoDice } from "./components/TwoDice";
+import { CycleHoliday } from "./components/CycleHoliday";
+import { Counter } from "./components/Counter";
 
 function App(): React.JSX.Element {
     return (
         <div className="App">
-            <div>
-                <Container>
-                    <Row>
-                        <Col>
-                            <header
-                                className="App-header"
-                                style={{ backgroundColor: "green" }}
-                            >
-                                <h1>Giovanni Palermo</h1>
-                                <br />
-                                UD CISC275 with React Hooks and TypeScript
-                            </header>
-                            <div
-                                style={{
-                                    marginLeft: "240px",
-                                    width: "50px",
-                                    height: "20px",
-                                    backgroundColor: "red",
-                                }}
-                            />
-                            <img
-                                src="C:\Users\Giost\Downloads\smileyface.jpg"
-                                alt="Smiley Face"
-                            />
-                        </Col>
-                        <Col>
-                            <ol>
-                                <li>Pineapple</li>
-                                <li>Apple</li>
-                                <li>Banana</li>
-                            </ol>
-                            <Button
-                                onClick={() => {
-                                    console.log("Hello World!");
-                                }}
-                            >
-                                Log Hello World
-                            </Button>
-                            <div
-                                style={{
-                                    marginLeft: "270px",
-                                    width: " 20px",
-                                    height: "50px",
-                                    backgroundColor: "red",
-                                }}
-                            />
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <header className="App-header">
+                UD CISC275 with React Hooks and TypeScript
+            </header>
+            <hr></hr>
+            <Counter></Counter>
+            <hr />
+            <RevealAnswer></RevealAnswer>
+            <hr />
+            <StartAttempt></StartAttempt>
+            <hr />
+            <TwoDice></TwoDice>
+            <hr />
+            <ChangeType></ChangeType>
+            <hr />
+            <CycleHoliday></CycleHoliday>
         </div>
     );
 }
